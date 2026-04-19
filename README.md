@@ -15,6 +15,12 @@ L'application permet de:
 - Ajuster dynamiquement les ponderations des criteres
 - Visualiser le front de Pareto pour identifier les solutions optimales
 - Comprendre les compromis entre les differentes solutions
+- Comparer jusqu'a 3 serveurs cote a cote avec detail des criteres
+- Tester des scenarios de demonstration preconfigures
+- Realiser une analyse de sensibilite des poids pour montrer la robustesse du classement
+- Remplir un pre-guide de besoin (formulaire + checklist) pour generer automatiquement poids et filtres
+- Exporter un rapport PDF imprimable du classement courant
+- Partager une configuration via un lien URL chargeable automatiquement
 
 ---
 
@@ -157,6 +163,14 @@ docker-compose build --no-cache
 
 ## Guide de Demonstration
 
+### Parcours recommande pour la presentation
+
+1. Ouvrir le mode equilibre et presenter la logique SAW.
+2. Basculer vers un preset budget ou performance pour montrer l'effet direct des poids.
+3. Selectionner 2 ou 3 serveurs dans le tableau puis utiliser la comparaison directe.
+4. Lancer l'analyse de sensibilite sur un critere pour illustrer la robustesse de la methode.
+5. Terminer par le front de Pareto et les details de calcul pour expliquer le classement.
+
 ### Scenario: Ajustement des Pondérations
 
 **Etape 1: Configuration par defaut (poids equitables)**
@@ -194,6 +208,16 @@ docker-compose build --no-cache
    - Axe Y = Score de performance hors cout (a maximiser)
    - Les solutions optimales sont en haut a gauche
 
+5. **Comparaison directe**:
+  - Selectionner deux serveurs ou plus dans le tableau
+  - Lire les differences de cout, ressources et recommendation
+  - Montrer les leaders par critere dans le panneau de comparaison
+
+6. **Sensibilite**:
+  - Faire varier un poids de 0 a 100
+  - Observer l'evolution du score du serveur selectionne
+  - Expliquer si le classement reste stable ou non
+
 ---
 
 ## Structure du Code
@@ -206,10 +230,13 @@ adomc/
 │   │   └── page.tsx        # Page principale avec logique
 │   ├── components/
 │   │   ├── ParetoChart.tsx # Graphique de Pareto (Recharts)
+│   │   ├── ComparisonPanel.tsx # Comparaison cote a cote des serveurs
+│   │   ├── SensitivityPanel.tsx # Analyse what-if sur les poids
 │   │   ├── ServerTable.tsx # Tableau de classement
 │   │   └── WeightSlider.tsx # Slider de ponderation
 │   ├── lib/
 │   │   ├── data.ts         # Donnees mockees des serveurs
+│   │   ├── weights.ts      # Repartition intelligente des poids
 │   │   └── saw.ts          # Algorithme SAW (normalisation, calcul)
 │   └── types/
 │       └── index.ts        # Definitions de types TypeScript

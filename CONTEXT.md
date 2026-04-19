@@ -101,12 +101,19 @@ ADOMC/
   - RAM: Cyan (#06B6D4)
   - CPU: Violet (#8B5CF6)
   - Bandwidth: Emerald (#10B981)
+- Presets de demonstration pour charger des scenarios de soutenance en un clic
 
 #### Tableau de Classement
 - Affichage dynamique des 10 serveurs
 - Classement par score global (mise a jour temps reel)
 - Indicateurs visuels pour le top 3 (medaille)
 - Affichage de tous les criteres et du score pondere
+- Boutons de comparaison pour selectionner jusqu'a 3 serveurs
+
+#### Comparaison et Sensibilite
+- Comparaison cote a cote des serveurs selectionnes avec leaders par critere
+- Analyse de sensibilite interactive sur un critere donne
+- Scenarios what-if utiles pour montrer la robustesse de SAW en presentation
 
 #### Graphique de Pareto
 - Scatter chart avec Recharts
@@ -204,6 +211,7 @@ npm install
 #### C. Details des Calculs
 - Affichage detaille des etapes de normalisation
 - Tooltip explicatif sur chaque valeur normalisee
+- Vue radar sur le meilleur serveur ou serveur compare
 
 #### D. Export et Partage
 - Export du classement en PDF/CSV

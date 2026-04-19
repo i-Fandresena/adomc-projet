@@ -41,7 +41,7 @@ export function calculateNormalizedScores(
       performanceScore: 0,
       isParetoOptimal: false,
       scoreRecommandation: 0,
-      niveauRecommandation: 'A etudier',
+      niveauRecommandation: 'A etudier' as const,
     };
   });
 
@@ -93,11 +93,11 @@ export function appliquerRecommandationParDefaut(
       server.normalizedScores.cpu * poidsSysteme.cpu +
       server.normalizedScores.bandwidth * poidsSysteme.bandwidth;
 
-    let niveauRecommandation: ServerWithScore['niveauRecommandation'] = 'Non recommande';
+    let niveauRecommandation: ServerWithScore['niveauRecommandation'] = 'Non recommande' as const;
     if (scoreRecommandation >= 0.7) {
-      niveauRecommandation = 'Recommande';
+      niveauRecommandation = 'Recommande' as const;
     } else if (scoreRecommandation >= 0.55) {
-      niveauRecommandation = 'A etudier';
+      niveauRecommandation = 'A etudier' as const;
     }
 
     return { ...server, scoreRecommandation, niveauRecommandation };
