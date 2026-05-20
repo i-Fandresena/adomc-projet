@@ -67,17 +67,34 @@ export function inscrireUtilisateur(email: string, motDePasse: string): { succes
 
 export function connecterUtilisateur(email: string, motDePasse: string): { succes: boolean; message: string } {
   const emailNormalise = email.trim().toLowerCase();
-  const utilisateurs = lireUtilisateurs();
-  const utilisateur = utilisateurs.find((u) => u.email.toLowerCase() === emailNormalise);
+  const motDePasseNettoye = motDePasse.trim();
 
-  if (!utilisateur || utilisateur.motDePasse !== motDePasse) {
-    return { succes: false, message: 'Email ou mot de passe incorrect.' };
+  if (!emailNormalise || !motDePasseNettoye) {
+    return { succes: false, message: 'Veuillez renseigner un email et un mot de passe.' };
+  }
+
+  const utilisateurs = lireUtilisateurs();
+  let utilisateur = utilisateurs.find((u) => u.email.toLowerCase() === emailNormalise);
+
+  // Mode demo: si le compte n'existe pas encore, on le cree automatiquement.
+  if (!utilisateur) {
+    utilisateur = {
+      email: emailNormalise,
+      motDePasse: motDePasseNettoye,
+      dateCreation: new Date().toISOString(),
+    };
+    utilisateurs.push(utilisateur);
+    ecrireUtilisateurs(utilisateurs);
+  } else if (utilisateur.motDePasse !== motDePasseNettoye) {
+    // En mode demo, on remplace le mot de passe pour simplifier l'acces.
+    utilisateur.motDePasse = motDePasseNettoye;
+    ecrireUtilisateurs(utilisateurs);
   }
 
   if (typeof window !== 'undefined') {
-    window.localStorage.setItem(CLE_SESSION, utilisateur.email);
+    window.localStorage.setItem(CLE_SESSION, emailNormalise);
   }
-  return { succes: true, message: 'Connexion reussie.' };
+  return { succes: true, message: 'Connexion reussie (mode demo).' };
 }
 
 export function obtenirSessionUtilisateur(): string | null {
